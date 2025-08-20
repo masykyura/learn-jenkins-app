@@ -24,7 +24,7 @@ pipeline {
         stage('Test') {
             steps {
                 sh '''
-                    if test -f build/intex.html; then
+                    if test -f build/index.html; then
                         echo "index.html exists"
                     else
                         echo "index.html missing"
