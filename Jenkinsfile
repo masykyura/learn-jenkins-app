@@ -25,7 +25,11 @@ pipeline {
             steps {
                 sh '''
                     if test -f build/intex.html; then
-                    echo "index.html exists"
+                        echo "index.html exists"
+                    else
+                        echo "index.html missing"
+                        exit 1
+                    fi
                 '''
             }
         }
