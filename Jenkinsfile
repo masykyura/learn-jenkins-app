@@ -23,7 +23,10 @@ pipeline {
         }
         stage('Test') {
             steps {
-                echo 'Hello'
+                sh '''
+                    if test -f build/intex.html; then
+                    echo "index.html exists"
+                '''
             }
         }
     }
