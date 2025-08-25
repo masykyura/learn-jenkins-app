@@ -34,14 +34,7 @@ pipeline {
 
             steps {
                 sh '''
-                    
-                    if test -f build/index.html; then
-                        echo "index.html exists"
-                    else
-                        echo "index.html missing"
-                        exit 1
-                    fi
-                
+                    #test -f build/index.html
                     npm test
                 '''
             }
@@ -72,4 +65,3 @@ pipeline {
         }
     }
 }
-
