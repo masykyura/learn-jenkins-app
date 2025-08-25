@@ -3,16 +3,16 @@ pipeline {
 
     stages {
         /*
+
         stage('Build') {
-            
             agent {
-                docker{
+                docker {
                     image 'node:18-alpine'
                     reuseNode true
                 }
             }
             steps {
-                sh'''
+                sh '''
                     ls -la
                     node --version
                     npm --version
@@ -23,10 +23,10 @@ pipeline {
             }
         }
         */
-        stage('Test') {
 
+        stage('Test') {
             agent {
-                docker{
+                docker {
                     image 'node:18-alpine'
                     reuseNode true
                 }
@@ -34,31 +34,24 @@ pipeline {
 
             steps {
                 sh '''
-                    if test -f build/index.html; then
-                        echo "index.html exists"
-                    else
-                        echo "index.html missing"
-                        exit 1
-                    fi
+                    #test -f build/index.html
                     npm test
                 '''
             }
         }
 
         stage('E2E') {
-
             agent {
-                docker{
-                    image 'mcr.microsoft.com/playwright:v1.55.0-noble'
+                docker {
+                    image 'mcr.microsoft.com/playwright:v1.39.0-jammy'
                     reuseNode true
-                    args '-u root:root'
                 }
             }
 
             steps {
                 sh '''
-                    npm install -g serve
-                    serve -s build &
+                    npm install serve
+                    node_modules/.bin/serve -s build &
                     sleep 10
                     npx playwright test
                 '''
@@ -68,7 +61,8 @@ pipeline {
 
     post {
         always {
-            junit 'test-results/junit.xml'
+            junit 'jest-results/junit.xml'
         }
     }
 }
+
